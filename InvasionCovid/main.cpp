@@ -1,7 +1,10 @@
-#include <iostream>
+#include "MainMenu.h"
 
-int main() {
-	std::cout "Hola mundo";
+int main()
+{
+    MainMenu mainMenu;
+    mainMenu.run();
 
-	return 0;
+
+    return 0;
 }
