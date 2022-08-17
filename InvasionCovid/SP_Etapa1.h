@@ -5,66 +5,25 @@
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
+#include <iostream>
 #include <random>
 #include <chrono>
-#include <map>
-#include <vector>
-#include "Jugador1.h"
-#include "Bala.h"
-#include "MinionEtapa1.h"
-#include "Vida.h"
-#include <iostream>
-#include <string>
-#include <sstream>
 
-class SP_Etapa1
+//Clases
+#include "MinionEtapa1.h"
+#include "SP.h"
+
+class SP_Etapa1 : public SP
 {
 private:
 
     //*Ventana
     sf::RenderWindow* window;
-    sf::Sprite fondo;
-    sf::Texture texture;
+    int anchura = 800;
+    int altura = 600;
 
-    sf::SoundBuffer fase1;
-    sf::Sound sound_fase1;
-    sf::SoundBuffer Atras;
-    sf::Sound sound_Atras;
-    sf::SoundBuffer Disparo;
-    sf::Sound sound_Disparo;
-    sf::SoundBuffer m1Dead;
-    sf::Sound sound_m1Dead;
-    sf::SoundBuffer winner;
-    sf::Sound sound_win;
-    sf::SoundBuffer loser;
-    sf::Sound sound_loser;
-    sf::SoundBuffer impacto;
-    sf::Sound sound_impacto;
-
-    //*Recursos
-    std::map<std::string, sf::Texture*> textures;
-    std::vector<Bala*> balas;
-
-    //*Puntos System
-    sf::Font font;
-    sf::Text Fase1Text[2];
-
-    //*Resultado Text
-    sf::Font fontResultado;
-    sf::Text DerrotaText;
-    sf::Text VictoriaText;
-
-    //*Vidas
-    int cantVidas = 3;
-    std::vector<Vida*> vidas;
-    bool derrota = false;
-    bool victoria = false;
-
-    //* Puntuacion
-
-    unsigned puntos;
-    //*Jugador1
-    Jugador1* jugador1;
+    sf::SoundBuffer fase;
+    sf::Sound sound_fase;
 
 
     //*Enemigos
@@ -72,31 +31,24 @@ private:
     float tiempoSpawnMax;
     std::vector<MinionEtapa1*> minions1;
     int unaVez = 1;
+    int tipo1 = 0;
 
     void iniciarWindow();
-    void iniciarTexture();
-
-    void iniciarVida();
-    void iniciarPuntuacion();
-    void iniciarJugador1();
-    void iniciarMinion1();
-    void iniciarResultado();
+    void iniciarEnemigo();
+    void iniciarTextureFondo();
+    void iniciarAudioFase();
+    void iniciarGUINivel();
 
 public:
     SP_Etapa1(/* args */);
     ~SP_Etapa1();
-    void run();
-
     void updatePollEvents();
-    void updateEntrada();
-    void updateCollision();
-    void updatePuntuacion();
-    void updateBalas();
-    void updateMinion1();
+    void updateEnemigo();
     void updateCombate();
     void update();
     void render();
-    void renderPuntuacion();
+    void run();
+    void windowClose();
 };
 
 #endif

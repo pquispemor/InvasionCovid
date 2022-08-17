@@ -104,7 +104,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\SFML-2.5.1 VSx64\include;C:\SFMLx64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\SFML-2.5.1 VSx64\include;C:\SFML-2.5.1x64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -121,7 +121,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\SFML-2.5.1 VSx64\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\SFML-2.5.1 VSx64\include;C:\SFML-2.5.1x64\include;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -134,7 +134,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Bala.cpp" />
-    <ClCompile Include="Bala2.cpp" />
+    <ClCompile Include="Derrota.cpp" />
     <ClCompile Include="Enemigo.cpp" />
     <ClCompile Include="Jugador1.cpp" />
     <ClCompile Include="Jugador2.cpp" />
@@ -146,15 +146,14 @@
     <ClCompile Include="MenuCreditos.cpp" />
     <ClCompile Include="MenuJugar.cpp" />
     <ClCompile Include="MinionEtapa1.cpp" />
-    <ClCompile Include="MPEtapa1.cpp" />
-    <ClCompile Include="MultiplayerJuego.cpp" />
+    <ClCompile Include="SP.cpp" />
     <ClCompile Include="SP_Etapa1.cpp" />
+    <ClCompile Include="Victoria.cpp" />
     <ClCompile Include="Vida.cpp" />
-    <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bala.h" />
-    <ClInclude Include="Bala2.h" />
+    <ClInclude Include="Derrota.h" />
     <ClInclude Include="Enemigo.h" />
     <ClInclude Include="Jugador1.h" />
     <ClInclude Include="Jugador2.h" />
@@ -165,11 +164,10 @@
     <ClInclude Include="MenuCreditos.h" />
     <ClInclude Include="MenuJugar.h" />
     <ClInclude Include="MinionEtapa1.h" />
-    <ClInclude Include="MPEtapa1.h" />
-    <ClInclude Include="MultiplayerJuego.h" />
+    <ClInclude Include="SP.h" />
     <ClInclude Include="SP_Etapa1.h" />
+    <ClInclude Include="Victoria.h" />
     <ClInclude Include="Vida.h" />
-    <ClInclude Include="Window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

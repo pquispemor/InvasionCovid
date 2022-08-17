@@ -1,2 +1,3 @@
 B:\InvasionCovid\x64\Debug\InvasionCovid.exe
 D:\InvasionCovid\x64\Debug\InvasionCovid.exe
+C:\Users\StickyPC\Documents\Github\InvasionCovid\InvasionCovid\x64\Debug\InvasionCovid.exe

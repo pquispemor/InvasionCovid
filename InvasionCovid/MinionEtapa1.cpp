@@ -19,7 +19,6 @@ MinionEtapa1::MinionEtapa1(float pos_x, float pos_y)
 {
     this->iniciarForma();
     this->iniciarVariables();
-
     this->sprite.setPosition(pos_x, pos_y);
 
 }
@@ -35,6 +34,21 @@ const sf::FloatRect MinionEtapa1::getLimites() const {
 
 const int& MinionEtapa1::getPuntos() const {
     return this->puntos;
+}
+
+void MinionEtapa1::getTipo(int tipo)
+{
+    this->tipo = tipo;
+}
+
+void MinionEtapa1::setTexture(sf::Texture texture)
+{
+    this->texture = texture;
+}
+
+void MinionEtapa1::setVelocidad(float velocidad)
+{
+    this->velocidad = velocidad;
 }
 
 void MinionEtapa1::update() {

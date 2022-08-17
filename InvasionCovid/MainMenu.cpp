@@ -2,8 +2,9 @@
 
 void MainMenu::iniciarWindow()
 {
-	this->window = new sf::RenderWindow(sf::VideoMode(anchura,altura), "Invasion Covid");
-	this->window->setFramerateLimit(60); //60 fps
+	std::shared_ptr<sf::RenderWindow> p(new sf::RenderWindow(sf::VideoMode(anchura, altura), "Invasion Covid"));
+	this->window = p;
+	this->window->setFramerateLimit(fps); //60 fps
 }
 
 void MainMenu::iniciarSprite()
@@ -24,8 +25,8 @@ void MainMenu::iniciarAudio()
 	this->audioMover.loadFromFile("Audio\\AudioMainMenu\\Mover.ogg");
 	this->sound_Mover.setBuffer(audioMover);
 
-	this->audioSpace.loadFromFile("Audio\\AudioMainMenu\\SpacePush.ogg");
-	this->sound_Space.setBuffer(audioSpace);
+	this->audioSeleccion.loadFromFile("Audio\\AudioMainMenu\\SpacePush.ogg");
+	this->sound_Seleccion.setBuffer(audioSeleccion);
 
 	this->audioEscape.loadFromFile("Audio\\AudioMainMenu\\EscapePush.ogg");
 	this->sound_Escape.setBuffer(audioEscape);
@@ -42,7 +43,7 @@ MainMenu::MainMenu()
 
 MainMenu::~MainMenu()
 {
-	delete this->window;
+	//delete this->window;
 }
 
 void MainMenu::updateEntrada()
@@ -53,8 +54,9 @@ void MainMenu::updateEntrada()
 				mainMenuExtras.MoverArriba();
 				sound_Mover.play();
 			}
-			else {
+			if (y == 1){
 				menuJugar.MoverArriba();
+				sound_Mover.play();
 			}
 		}
 
@@ -63,13 +65,14 @@ void MainMenu::updateEntrada()
 				mainMenuExtras.MoverAbajo();
 				sound_Mover.play();
 			}
-			else {
+			if (y == 1) {
 				menuJugar.MoverAbajo();
+				sound_Mover.play();
 			}
 		}
 
 		if (event.key.code == sf::Keyboard::Space) {
-			sound_Space.play();
+			sound_Seleccion.play();
 			if (y == 0) {
 				int mainMenuOpcion = mainMenuExtras.MainMenuPressed();
 				switch (mainMenuOpcion)
@@ -91,17 +94,16 @@ void MainMenu::updateEntrada()
 			else {
 				int menuJugarOpcion = menuJugar.MenuJugarPressed();
 				//Un Jugador
-				if (menuJugarOpcion >= 0)
-					sound.stop();
-				else
-					sound.play();
 				if (menuJugarOpcion == 0) {
+					if (s1 == 0) {
+						sound.stop();
+						s1 = 1;
+					}
 					SP_Etapa1 sp_etapa1;
 					sp_etapa1.run();
+
 				}
-				if (menuJugarOpcion == 1) {
-					MultiplayerJuego mp_juego;
-					mp_juego.run();
+				else if (menuJugarOpcion == 1) {
 
 				}
 			}
@@ -109,7 +111,6 @@ void MainMenu::updateEntrada()
 		}
 	}
 }
-
 
 void MainMenu::updatePollEvent()
 {
@@ -121,6 +122,10 @@ void MainMenu::updatePollEvent()
 			if (y > 0) {
 				sound_Escape.play();
 				y = 0;
+				if (s1 == 1) {
+					sound.play();
+					s1 = 0;
+				}
 			}
 		}
 		this->updateEntrada();

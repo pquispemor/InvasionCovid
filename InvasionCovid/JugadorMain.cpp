@@ -59,8 +59,28 @@ void JugadorMain::updateAtaque() {
         this->ataqueTiempo += 0.5f;
 }
 
+void JugadorMain::updateCollision()
+{
+    if (sprite.getPosition().x < 0) {
+        sprite.setPosition(0, sprite.getPosition().y);
+    }
+
+    if (sprite.getPosition().y < 0) {
+        sprite.setPosition(sprite.getPosition().x, 0);
+    }
+
+    if (sprite.getPosition().x + sprite.getGlobalBounds().width > 800) {
+        sprite.setPosition(800 - sprite.getGlobalBounds().width, sprite.getPosition().y);
+    }
+
+    if (sprite.getPosition().y + sprite.getGlobalBounds().height > 600) {
+        sprite.setPosition(sprite.getPosition().x, 600 - sprite.getGlobalBounds().height);
+    }
+}
+
 void JugadorMain::update() {
     this->updateAtaque();
+    this->updateCollision();
 }
 
 void JugadorMain::draw(sf::RenderTarget& target, sf::RenderStates states) const {

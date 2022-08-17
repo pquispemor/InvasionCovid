@@ -10,7 +10,7 @@ private:
     unsigned conteoPuntos;
     sf::Sprite sprite;
     sf::Texture texture;
-    int tipo;
+    int tipo = 1;
     float velocidad;
     int hp;
     int hpMax;
@@ -28,6 +28,9 @@ public:
     const sf::FloatRect getLimites() const;
     const int& getPuntos() const;
 
+    void getTipo(int);
+    void setTexture(sf::Texture texture);
+    void setVelocidad(float velocidad);
     void update();
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
     friend std::ostream& operator<<(std::ostream& out, const MinionEtapa1& p);

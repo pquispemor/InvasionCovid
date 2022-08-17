@@ -5,72 +5,38 @@ std::default_random_engine gen(eng);
 std::uniform_int_distribution<> rand_digits(0, 800);
 
 void SP_Etapa1::iniciarWindow() {
-    this->window = new sf::RenderWindow(sf::VideoMode(800, 600), "Fase1");
-    this->window->setFramerateLimit(60);
+    this->window = new sf::RenderWindow(sf::VideoMode(anchura, altura), "Fase1");
+    this->window->setFramerateLimit(fps);
 }
 
-void SP_Etapa1::iniciarTexture() {
+void SP_Etapa1::iniciarTextureFondo() {
     this->texture.loadFromFile("Fondos\\Fase1.png");
     fondo.setTexture(this->texture);
-    this->textures["BALAS"] = new sf::Texture();
-    this->textures["BALAS"]->loadFromFile("Sprites\\DisparoPlayer1.png");
 }
 
+void SP_Etapa1::iniciarAudioFase()
+{
+    fase.loadFromFile("Audio\\Fase1-Batalla2.ogg");
+    sound_fase.setBuffer(fase);
+    sound_fase.setVolume(50);
+    sound_fase.play();
+}
 
-void SP_Etapa1::iniciarPuntuacion() {
+void SP_Etapa1::iniciarGUINivel()
+{
     //Cargar Fuente de Letra
-    this->puntos = 0;
     if (!this->font.loadFromFile("Fuente/BabyMonsta.otf")) {
         std::cout << "No ahi una fuente aqui";
     }
     //*Nivel
-    Fase1Text[0].setFont(this->font);
-    Fase1Text[0].setCharacterSize(30);
-    Fase1Text[0].setFillColor(sf::Color::White);
-    Fase1Text[0].setString("1");
-    Fase1Text[0].setPosition(440, 8);
-
-    //*Puntuacion
-    Fase1Text[1].setFont(this->font);
-    Fase1Text[1].setCharacterSize(30);
-    Fase1Text[1].setFillColor(sf::Color::White);
-    Fase1Text[1].setString("0");
-    Fase1Text[1].setPosition(200, 8);
-
-
+    nivelText.setFont(this->font);
+    nivelText.setCharacterSize(30);
+    nivelText.setFillColor(sf::Color::White);
+    nivelText.setString("1");
+    nivelText.setPosition(440, 8);
 }
 
-void SP_Etapa1::iniciarResultado() {
-    if (!this->fontResultado.loadFromFile("Fuente/BabyMonsta.otf")) {
-        std::cout << "No ahi una fuente aqui";
-    }
-    DerrotaText.setFont(this->fontResultado);
-    DerrotaText.setCharacterSize(100);
-    DerrotaText.setFillColor(sf::Color::White);
-    DerrotaText.setString("Derrota");
-    DerrotaText.setPosition(this->window->getSize().x / 2 - 150, this->window->getSize().y / 2 - 100);
-
-    VictoriaText.setFont(this->fontResultado);
-    VictoriaText.setCharacterSize(100);
-    VictoriaText.setFillColor(sf::Color::White);
-    VictoriaText.setString("Victoria");
-    VictoriaText.setPosition(this->window->getSize().x / 2 - 150, this->window->getSize().y / 2 - 100);
-}
-
-
-void SP_Etapa1::iniciarJugador1() {
-    this->jugador1 = new Jugador1();
-    std::cout << *this->jugador1;
-}
-
-void SP_Etapa1::iniciarVida() {
-    int d = 650;
-    for (int i = 0; i < 3; i++) {
-        this->vidas.push_back(new Vida(d, 10));
-        d += 50; 
-    }
-}
-void SP_Etapa1::iniciarMinion1() {
+void SP_Etapa1::iniciarEnemigo() {
     this->tiempoSpawnMax = 20.f;
     this->tiempoSpawn = this->tiempoSpawnMax;
 }
@@ -78,29 +44,16 @@ void SP_Etapa1::iniciarMinion1() {
 SP_Etapa1::SP_Etapa1()
 {
     this->iniciarWindow();
-    this->iniciarTexture();
-    fase1.loadFromFile("Audio\\Fase1-Batalla2.ogg");
-    sound_fase1.setBuffer(fase1);
-    sound_fase1.setVolume(50);
-    Atras.loadFromFile("Audio\\EscapePush.ogg");
-    sound_Atras.setBuffer(Atras);
-    Disparo.loadFromFile("Audio\\Disparo.ogg");
-    sound_Disparo.setBuffer(Disparo);
-    m1Dead.loadFromFile("Audio\\minionDead.ogg");
-    sound_m1Dead.setBuffer(m1Dead);
-    winner.loadFromFile("Audio\\Winner.ogg");
-    sound_win.setBuffer(winner);
-    loser.loadFromFile("Audio\\Loser.ogg");
-    sound_loser.setBuffer(loser);
-    impacto.loadFromFile("Audio\\ImpactoNave.ogg");
-    sound_impacto.setBuffer(impacto);
-    this->iniciarPuntuacion();
-    this->iniciarResultado();
+    this->iniciarTextureBalas();
+    this->iniciarGUI();
     this->iniciarJugador1();
-    this->iniciarVida();
-    this->iniciarMinion1();
-    sound_fase1.play();
-    sound_fase1.setVolume(50);
+    this->iniciarAudiosFijos();
+    this->iniciarEnemigo();
+    this->iniciarTextureFondo();
+    this->iniciarAudioFase();
+    this->iniciarGUINivel();
+    sound_fase.play();
+    sound_fase.setVolume(50);
 }
 
 SP_Etapa1::~SP_Etapa1()
@@ -124,15 +77,8 @@ SP_Etapa1::~SP_Etapa1()
     }
 }
 
-void SP_Etapa1::run() {
-    while (this->window->isOpen())
-    {
-        this->update();
-        this->render();
-    }
-}
-
-void SP_Etapa1::updatePollEvents() {
+void SP_Etapa1::updatePollEvents()
+{
     sf::Event e;
     while (this->window->pollEvent(e))
     {
@@ -147,84 +93,7 @@ void SP_Etapa1::updatePollEvents() {
     }
 }
 
-void SP_Etapa1::updateEntrada() {
-    //Jugador1 update
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-        this->jugador1->move(-1.f, 0.f);
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-        this->jugador1->move(1.f, 0.f);
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-        this->jugador1->move(0.f, -1.f);
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-        this->jugador1->move(0.f, 1.f);
-
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && this->jugador1->puedesAtacar()) {
-        this->balas.push_back(new Bala(this->textures["BALAS"],
-            this->jugador1->getPos().x + this->jugador1->getLimites().width / 2.f,
-            this->jugador1->getPos().y, 0.f, -1.f, 5.f));
-        sound_Disparo.play();
-    }
-
-
-}
-
-void SP_Etapa1::updatePuntuacion() {
-    std::stringstream ss;
-
-    ss << this->puntos;
-
-    this->Fase1Text[1].setString(ss.str());
-
-    if (puntos >= 500) {
-        victoria = true;
-    }
-
-    //*Vidas
-
-}
-
-void SP_Etapa1::updateCollision() {
-
-    //*Colision Izquierda
-    if (this->jugador1->getLimites().left < 0.f) {
-        this->jugador1->setPosition(0.f, this->jugador1->getLimites().top);
-    }
-    //*Colision Derecha
-    else if (this->jugador1->getLimites().left + this->jugador1->getLimites().width >= this->window->getSize().x) {
-        this->jugador1->setPosition(this->window->getSize().x - this->jugador1->getLimites().width, this->jugador1->getLimites().top);
-    }
-    //*Colision Arriba
-    if (this->jugador1->getLimites().top < 0.f) {
-        this->jugador1->setPosition(this->jugador1->getLimites().left, 0.f);
-    }
-
-    //*Colision Abajo
-    else if (this->jugador1->getLimites().top + this->jugador1->getLimites().height >= this->window->getSize().y) {
-        this->jugador1->setPosition(this->jugador1->getLimites().left, this->window->getSize().y - this->jugador1->getLimites().height);
-    }
-}
-
-
-void SP_Etapa1::updateBalas() {
-
-    unsigned counter = 0;
-    for (auto* bala : this->balas) {
-        bala->update();
-
-        //* Eliminación de balas (parte superior de la pantalla)
-        if (bala->getLimites().top + bala->getLimites().height < 100.f) {
-            //*Eliminar Bala
-            delete this->balas.at(counter);
-            this->balas.erase(this->balas.begin() + counter);
-            --counter;
-
-        }
-
-        ++counter;
-    }
-}
-
-void SP_Etapa1::updateMinion1() {
+void SP_Etapa1::updateEnemigo() {
     this->tiempoSpawn += 0.5f;
     if (this->tiempoSpawn >= this->tiempoSpawnMax)
     {
@@ -240,6 +109,26 @@ void SP_Etapa1::updateMinion1() {
     unsigned counter = 0;
     for (auto* minion1 : this->minions1) {
         minion1->update();
+        if (puntos > 500) {
+            this->textureEnemigo.loadFromFile("Sprites\\Minion2.png");
+            minion1->setTexture(textureEnemigo);
+            minion1->setVelocidad(8.f);
+        }
+        if (puntos > 1000) {
+            this->textureEnemigo.loadFromFile("Sprites\\Minion3.png");
+            minion1->setTexture(textureEnemigo);
+            minion1->setVelocidad(10.f);
+        }
+        if (puntos > 1500) {
+            this->textureEnemigo.loadFromFile("Sprites\\Minion4.png");
+            minion1->setTexture(textureEnemigo);
+            minion1->setVelocidad(12.f);
+        }
+        if (puntos > 2000) {
+            this->textureEnemigo.loadFromFile("Sprites\\Minion5.png");
+            minion1->setTexture(textureEnemigo);
+            minion1->setVelocidad(14.f);
+        }
 
         //*Enemigos Colision con Pantalla
         if (minion1->getLimites().top > this->window->getSize().y) {
@@ -263,7 +152,6 @@ void SP_Etapa1::updateMinion1() {
         ++counter;
     }
     if (vidas.size() == 0) {
-        sound_loser.play();
         derrota = true;
     }
 
@@ -284,9 +172,8 @@ void SP_Etapa1::updateCombate() {
                 delete this->balas[k];
                 this->balas.erase(this->balas.begin() + k);
 
-
                 minion1_delete = true;
-                sound_m1Dead.play();
+                sound_enemigoDead.play();
             }
         }
 
@@ -296,27 +183,17 @@ void SP_Etapa1::updateCombate() {
 void SP_Etapa1::update() {
     this->updatePollEvents();
 
-    this->updateEntrada();
-
-    this->jugador1->update();
-
-    this->updateCollision();
-
-    this->updateBalas();
-
     if (derrota == false and victoria == false) {
-        this->updateMinion1();
+        this->updateEntrada();
+        this->jugador1->update();
+        this->updateBalas();
+        this->updateEnemigo();
     }
     this->updateCombate();
 
     this->updatePuntuacion();
 }
 
-void SP_Etapa1::renderPuntuacion() {
-    for (int i = 0; i < 2; ++i) {
-        this->window->draw(Fase1Text[i]);
-    }
-}
 
 void SP_Etapa1::render() {
     this->window->clear();
@@ -335,15 +212,30 @@ void SP_Etapa1::render() {
         this->window->draw(*minion1);
     }
     if (victoria == true) {
-        this->window->draw(VictoriaText);
-        sound_fase1.stop();
+        this->window->draw(resultV);
+        sound_fase.stop();
     }
     if (derrota == true) {
-        this->window->draw(DerrotaText);
-        sound_fase1.stop();
+        this->window->draw(resultD);
+        sound_fase.stop();
     }
-    this->renderPuntuacion();
+    this->window->draw(puntuacionText);
+    this->window->draw(nivelText);
 
     this->window->display();
 
+}
+
+void SP_Etapa1::run()
+{
+    while (this->window->isOpen())
+    {
+        this->update();
+        this->render();
+    }
+}
+
+void SP_Etapa1::windowClose()
+{
+    this->window->close();
 }

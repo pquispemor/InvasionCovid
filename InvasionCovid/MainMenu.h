@@ -6,21 +6,22 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Audio.hpp>
-#include "Window.h"
 #include "MainMenuExtras.h"
 #include "MenuJugar.h"
 #include "MenuControles.h"
 #include "MenuCreditos.h"
 #include "SP_Etapa1.h"
-#include "MultiplayerJuego.h"
+#include <memory>
 
 
-
-class MainMenu : public Window
+class MainMenu
 {
 private:
 	//Ventana
-	sf::RenderWindow* window;
+	std::shared_ptr<sf::RenderWindow> window;
+	int anchura = 800;
+	int altura = 600;
+	int fps = 60;
 
 	//Evento
 	sf::Event event;
@@ -36,10 +37,11 @@ private:
 	//Audio Extras
 	sf::SoundBuffer audioMover;
 	sf::Sound sound_Mover;
-	sf::SoundBuffer audioSpace;
-	sf::Sound sound_Space;
+	sf::SoundBuffer audioSeleccion;
+	sf::Sound sound_Seleccion;
 	sf::SoundBuffer audioEscape;
 	sf::Sound sound_Escape;
+	int s1 = 0;
 
 
 	//MainMenuExtras
