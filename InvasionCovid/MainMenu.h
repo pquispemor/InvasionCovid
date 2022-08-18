@@ -7,12 +7,11 @@
 #include <SFML/System.hpp>
 #include <SFML/Audio.hpp>
 #include "MainMenuExtras.h"
-#include "MenuJugar.h"
-#include "MenuControles.h"
-#include "MenuCreditos.h"
-#include "MenuFactory.h"
+
+//Patron de Diseño Factory Method
+#include "MenuFactory.h" 
 #include "Menu.h"
-#include "SP_Etapa1.h"
+#include "UnJugador.h"
 #include <memory>
 
 
@@ -43,14 +42,16 @@ private:
 	sf::Sound sound_Seleccion;
 	sf::SoundBuffer audioEscape;
 	sf::Sound sound_Escape;
-	int s1 = 0;
+	int sonidoUnaVez = 0;
 
 
 	//MainMenuExtras
 	MainMenuExtras mainMenuExtras;
 
 	//MainMenu Otras Ventanas
-	int y = 0;
+	int Ventana = 0;
+
+	//Patron de Diseño Factory Method
 	MenuFactory menuFactory;
 	Menu* menuSeleccionado;
 

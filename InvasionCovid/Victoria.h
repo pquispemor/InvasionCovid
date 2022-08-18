@@ -9,15 +9,14 @@
 class Victoria : public sf::Drawable
 {
 private:
-    //Texto
-    sf::Font fontResultado;
-    sf::Text VictoriaText;
-    sf::Text VictoriaAux;
+    //Sprite
+    sf::Sprite victoria;
+    sf::Texture victoriaTexture;
     //Audio
     sf::SoundBuffer winner;
     sf::Sound sound_win;
 
-    void iniciarText();
+    void iniciarGUI();
     void iniciarAudio();
 public:
 

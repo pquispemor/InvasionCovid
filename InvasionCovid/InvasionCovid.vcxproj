@@ -147,9 +147,7 @@
     <ClCompile Include="MenuCreditos.cpp" />
     <ClCompile Include="MenuFactory.cpp" />
     <ClCompile Include="MenuJugar.cpp" />
-    <ClCompile Include="MinionEtapa1.cpp" />
-    <ClCompile Include="SP.cpp" />
-    <ClCompile Include="SP_Etapa1.cpp" />
+    <ClCompile Include="UnJugador.cpp" />
     <ClCompile Include="Victoria.cpp" />
     <ClCompile Include="Vida.cpp" />
   </ItemGroup>
@@ -167,9 +165,7 @@
     <ClInclude Include="MenuCreditos.h" />
     <ClInclude Include="MenuFactory.h" />
     <ClInclude Include="MenuJugar.h" />
-    <ClInclude Include="MinionEtapa1.h" />
-    <ClInclude Include="SP.h" />
-    <ClInclude Include="SP_Etapa1.h" />
+    <ClInclude Include="UnJugador.h" />
     <ClInclude Include="Victoria.h" />
     <ClInclude Include="Vida.h" />
   </ItemGroup>

@@ -1,7 +1,8 @@
 #include "Enemigo.h"
 
 void Enemigo::iniciarVariables() {
-    this->tipo = 1;
+    this->conteoPuntos = 50;
+    this->tipo = 0;
     this->velocidad = 5.f;
     this->hpMax = 10;
     this->hp = 0;
@@ -18,9 +19,7 @@ Enemigo::Enemigo(float pos_x, float pos_y)
 {
     this->iniciarForma();
     this->iniciarVariables();
-
     this->sprite.setPosition(pos_x, pos_y);
-
 }
 
 Enemigo::~Enemigo()
@@ -36,6 +35,20 @@ const int& Enemigo::getPuntos() const {
     return this->puntos;
 }
 
+void Enemigo::setTipo(int tipo)
+{
+    this->tipo = tipo;
+}
+
+void Enemigo::setTexture(sf::Texture texture)
+{
+    this->texture = texture;
+}
+
+void Enemigo::setVelocidad(float velocidad)
+{
+    this->velocidad = velocidad;
+}
 void Enemigo::update() {
     this->sprite.move(0.f, this->velocidad);
 }

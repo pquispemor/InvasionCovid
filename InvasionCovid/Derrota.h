@@ -9,16 +9,15 @@
 class Derrota : public sf::Drawable
 {
 private:
-    //Texto
-    sf::Font fontResultado;
-    sf::Text DerrotaText;
-    sf::Text DerrotaAux;
+    //Sprite
+    sf::Sprite derrota;
+    sf::Texture derrotaTexture;
 
     //Audio
     sf::SoundBuffer loser;
     sf::Sound sound_loser;
 
-    void iniciarText();
+    void iniciarGUI();
     void iniciarAudio();
 public:
 

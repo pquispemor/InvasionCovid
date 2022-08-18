@@ -1,22 +1,10 @@
 #include "Victoria.h"
 
-void Victoria::iniciarText()
+void Victoria::iniciarGUI()
 {
-    if (!this->fontResultado.loadFromFile("Fuente/BabyMonsta.otf")) {
-        std::cout << "No ahi una fuente aqui";
-    }
-
-    VictoriaText.setFont(this->fontResultado);
-    VictoriaText.setCharacterSize(100);
-    VictoriaText.setFillColor(sf::Color::White);
-    VictoriaText.setString("Victoria");
-    VictoriaText.setPosition(250, 200);
-
-    VictoriaAux.setFont(this->fontResultado);
-    VictoriaAux.setCharacterSize(50);
-    VictoriaAux.setFillColor(sf::Color::White);
-    VictoriaAux.setString("Presiona Espacio para Continuar");
-    VictoriaAux.setPosition(100, 350);
+    this->victoriaTexture.loadFromFile("Fondos\\VictoriaResult.png");
+    victoria.setTexture(this->victoriaTexture);
+    victoria.setPosition(200, 100);
 }
 
 void Victoria::iniciarAudio()
@@ -27,7 +15,7 @@ void Victoria::iniciarAudio()
 
 Victoria::Victoria()
 {
-    this->iniciarText();
+    this->iniciarGUI();
     this->iniciarAudio();
 }
 
@@ -38,6 +26,5 @@ void Victoria::sonido()
 
 void Victoria::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-    target.draw(this->VictoriaText, states);
-    target.draw(this->VictoriaAux, states);
+    target.draw(this->victoria, states);
 }

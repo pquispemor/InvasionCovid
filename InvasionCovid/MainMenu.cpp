@@ -50,22 +50,22 @@ void MainMenu::updateEntrada()
 {
 	if (event.type == sf::Event::KeyReleased) {
 		if (event.key.code == sf::Keyboard::W) {
-			if (y == 0) {
+			if (Ventana == 0) {
 				mainMenuExtras.MoverArriba();
 				sound_Mover.play();
 			}
-			if (y == 1){
+			if (Ventana == 1){
 				menuSeleccionado->MoverArriba();
 				sound_Mover.play();
 			}
 		}
 
 		if (event.key.code == sf::Keyboard::S) {
-			if (y == 0) {
+			if (Ventana == 0) {
 				mainMenuExtras.MoverAbajo();
 				sound_Mover.play();
 			}
-			if (y == 1) {
+			if (Ventana == 1) {
 				menuSeleccionado->MoverAbajo();
 				sound_Mover.play();
 			}
@@ -73,21 +73,21 @@ void MainMenu::updateEntrada()
 
 		if (event.key.code == sf::Keyboard::Space) {
 			sound_Seleccion.play();
-			if (y == 0) {
+			if (Ventana == 0) {
 				int mainMenuOpcion = mainMenuExtras.MainMenuPressed();
 				switch (mainMenuOpcion)
 				{
 				case 0:
-					y = 1;
-					menuSeleccionado = menuFactory.getMenu(y);
+					Ventana = 1;
+					menuSeleccionado = menuFactory.getMenu(Ventana);
 					break;
 				case 1:
-					y = 2;
-					menuSeleccionado = menuFactory.getMenu(y);
+					Ventana = 2;
+					menuSeleccionado = menuFactory.getMenu(Ventana);
 					break;
 				case 2:
-					y = 3;
-					menuSeleccionado = menuFactory.getMenu(y);
+					Ventana = 3;
+					menuSeleccionado = menuFactory.getMenu(Ventana);
 					break;
 				case 3:
 					window->close();
@@ -98,14 +98,16 @@ void MainMenu::updateEntrada()
 				int menuJugarOpcion = menuSeleccionado->MenuJugarPressed();
 				//Un Jugador
 				if (menuJugarOpcion == 0) {
-					if (s1 == 0) {
+					//Condicional de una vez para que la musica solo se detenga una vez
+					if (sonidoUnaVez == 0) {
 						sound.stop();
-						s1 = 1;
+						sonidoUnaVez = 1;
 					}
-					SP_Etapa1 sp_etapa1;
-					sp_etapa1.run();
+					UnJugador unJugador;
+					unJugador.run();
 
 				}
+				//Dos Jugadores
 				else if (menuJugarOpcion == 1) {
 
 				}
@@ -119,15 +121,17 @@ void MainMenu::updatePollEvent()
 {
 	while (this->window->pollEvent(event))
 	{
+		//Icono X
 		if (event.type == sf::Event::Closed)
 			this->window->close();
+
 		if (event.Event::KeyPressed && event.Event::key.code == sf::Keyboard::Escape) {
-			if (y > 0) {
+			if (Ventana > 0) {
 				sound_Escape.play();
-				y = 0;
-				if (s1 == 1) {
+				Ventana = 0;
+				if (sonidoUnaVez == 1) {
 					sound.play();
-					s1 = 0;
+					sonidoUnaVez = 0;
 				}
 			}
 		}
@@ -146,19 +150,21 @@ void MainMenu::update()
 void MainMenu::render()
 {
 	this->window->clear();
-	if (y == 0) {
+
+	//Dibujar Menu Principal
+	if (Ventana == 0) {
 		//Dibujo MainMenu
 		this->window->draw(fondo);
 		//Dibujando MainMenuExtras
 		this->window->draw(mainMenuExtras);
 	}
-	else if (y == 1) {
+	else if (Ventana == 1) {
 		this->window->draw(*this->menuSeleccionado);
 	}
-	else if (y == 2) {
+	else if (Ventana == 2) {
 		this->window->draw(*this->menuSeleccionado);
 	}
-	else if (y == 3) {
+	else if (Ventana == 3) {
 		this->window->draw(*this->menuSeleccionado);
 	}
 

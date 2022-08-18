@@ -46,6 +46,7 @@ public:
     void updateCollision();
     void update();
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+    friend std::ostream& operator<<(std::ostream& out, const JugadorMain& p);
 };
 
 #endif

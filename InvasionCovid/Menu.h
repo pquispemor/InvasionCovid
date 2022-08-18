@@ -18,7 +18,7 @@ protected:
 
 	virtual void iniciarSprite() {};
 public:
-	Menu() {};
+	Menu();
 	~Menu();
 	virtual void MoverArriba() {};
 	virtual void MoverAbajo() {};

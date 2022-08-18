@@ -9,12 +9,10 @@
 class Jugador1 : public JugadorMain
 {
 private:
-    int tipo = 1;
 public:
     Jugador1();
     ~Jugador1();
     void IniciarSpriteYPos();
-    friend std::ostream& operator<<(std::ostream& out, const Jugador1& p);
 
 
 };

@@ -86,3 +86,14 @@ void JugadorMain::update() {
 void JugadorMain::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     target.draw(this->sprite, states);
 }
+
+std::ostream& operator<<(std::ostream& out, const JugadorMain& p)
+{
+
+    out << "\n\tDATOS DEL JUGADOR\n";
+    out << "Vida del Jugador : " << p.hp << std::endl;
+    out << "Danio del Jugador : " << p.danio << std::endl;
+    out << "Velocidad del Jugador : " << p.moveSpeed << std::endl;
+
+    return out;
+}
