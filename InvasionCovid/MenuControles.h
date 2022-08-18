@@ -4,12 +4,10 @@
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
-class MenuControles : public sf::Drawable
+#include "Menu.h"
+class MenuControles : public Menu
 {
 private:
-	//Sprite
-	sf::Sprite fondo;
-	sf::Texture textura;
 
 	void iniciarSprite();
 public:

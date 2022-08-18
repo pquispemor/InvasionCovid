@@ -55,7 +55,7 @@ void MainMenu::updateEntrada()
 				sound_Mover.play();
 			}
 			if (y == 1){
-				menuJugar.MoverArriba();
+				menuSeleccionado->MoverArriba();
 				sound_Mover.play();
 			}
 		}
@@ -66,7 +66,7 @@ void MainMenu::updateEntrada()
 				sound_Mover.play();
 			}
 			if (y == 1) {
-				menuJugar.MoverAbajo();
+				menuSeleccionado->MoverAbajo();
 				sound_Mover.play();
 			}
 		}
@@ -79,12 +79,15 @@ void MainMenu::updateEntrada()
 				{
 				case 0:
 					y = 1;
+					menuSeleccionado = menuFactory.getMenu(y);
 					break;
 				case 1:
 					y = 2;
+					menuSeleccionado = menuFactory.getMenu(y);
 					break;
 				case 2:
 					y = 3;
+					menuSeleccionado = menuFactory.getMenu(y);
 					break;
 				case 3:
 					window->close();
@@ -92,7 +95,7 @@ void MainMenu::updateEntrada()
 				}
 			}
 			else {
-				int menuJugarOpcion = menuJugar.MenuJugarPressed();
+				int menuJugarOpcion = menuSeleccionado->MenuJugarPressed();
 				//Un Jugador
 				if (menuJugarOpcion == 0) {
 					if (s1 == 0) {
@@ -150,13 +153,13 @@ void MainMenu::render()
 		this->window->draw(mainMenuExtras);
 	}
 	else if (y == 1) {
-		this->window->draw(menuJugar);
+		this->window->draw(*this->menuSeleccionado);
 	}
 	else if (y == 2) {
-		this->window->draw(menuControles);
+		this->window->draw(*this->menuSeleccionado);
 	}
 	else if (y == 3) {
-		this->window->draw(menuCreditos);
+		this->window->draw(*this->menuSeleccionado);
 	}
 
 	this->window->display();

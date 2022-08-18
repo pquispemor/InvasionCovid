@@ -2,8 +2,8 @@
 
 void MenuJugar::iniciarSprite()
 {
-	this->textura.loadFromFile("Fondos\\MenuJugar.png");
-	this->fondo.setTexture(this->textura);
+    this->textura.loadFromFile("Fondos\\MenuJugar.png");
+    this->fondo.setTexture(this->textura);
     if (!font.loadFromFile("Fuente/BabyMonsta.otf")) {
         std::cout << "No ahi una fuente aqui";
     }
@@ -26,7 +26,7 @@ void MenuJugar::iniciarSprite()
 
 MenuJugar::MenuJugar()
 {
-	this->iniciarSprite();
+    this->iniciarSprite();
 }
 
 MenuJugar::~MenuJugar()
@@ -57,14 +57,9 @@ void MenuJugar::MoverAbajo()
     }
 }
 
-int MenuJugar::MenuJugarPressed()
-{
-    return MenuJugarSeleccion;
-}
-
 void MenuJugar::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-	target.draw(this->fondo, states);
+    target.draw(this->fondo, states);
     for (int i = 0; i < 2; ++i) {
         target.draw(this->MenuJugarText[i], states);
     }

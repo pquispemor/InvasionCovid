@@ -4,26 +4,18 @@
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
-
 #include <iostream>
+#include "Menu.h"
 
-class MenuJugar : public sf::Drawable
+class MenuJugar : public Menu
 {
 private:
-	//Sprite
-	sf::Sprite fondo;
-	sf::Texture textura;
-	int MenuJugarSeleccion;
-	sf::Font font;
-	sf::Text MenuJugarText[2];
-
 	void iniciarSprite();
 public:
 	MenuJugar();
 	~MenuJugar();
 	void MoverArriba();
 	void MoverAbajo();
-	int MenuJugarPressed();
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 };
 

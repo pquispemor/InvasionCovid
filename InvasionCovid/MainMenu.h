@@ -10,6 +10,8 @@
 #include "MenuJugar.h"
 #include "MenuControles.h"
 #include "MenuCreditos.h"
+#include "MenuFactory.h"
+#include "Menu.h"
 #include "SP_Etapa1.h"
 #include <memory>
 
@@ -49,9 +51,8 @@ private:
 
 	//MainMenu Otras Ventanas
 	int y = 0;
-	MenuJugar menuJugar;
-	MenuControles menuControles;
-	MenuCreditos menuCreditos;
+	MenuFactory menuFactory;
+	Menu* menuSeleccionado;
 
 	//MenuJugar Otras ventanas
 	int SeleccionJugar = 0;

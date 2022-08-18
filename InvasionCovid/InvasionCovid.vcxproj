@@ -142,8 +142,10 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="MainMenuExtras.cpp" />
+    <ClCompile Include="Menu.cpp" />
     <ClCompile Include="MenuControles.cpp" />
     <ClCompile Include="MenuCreditos.cpp" />
+    <ClCompile Include="MenuFactory.cpp" />
     <ClCompile Include="MenuJugar.cpp" />
     <ClCompile Include="MinionEtapa1.cpp" />
     <ClCompile Include="SP.cpp" />
@@ -160,8 +162,10 @@
     <ClInclude Include="JugadorMain.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="MainMenuExtras.h" />
+    <ClInclude Include="Menu.h" />
     <ClInclude Include="MenuControles.h" />
     <ClInclude Include="MenuCreditos.h" />
+    <ClInclude Include="MenuFactory.h" />
     <ClInclude Include="MenuJugar.h" />
     <ClInclude Include="MinionEtapa1.h" />
     <ClInclude Include="SP.h" />

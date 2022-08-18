@@ -4,14 +4,11 @@
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
+#include "Menu.h"
 
-class MenuCreditos : public sf::Drawable
+class MenuCreditos : public Menu
 {
 private:
-	//Sprite
-	sf::Sprite fondo;
-	sf::Texture textura;
-
 	void iniciarSprite();
 public:
 	MenuCreditos();
