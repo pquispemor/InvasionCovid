@@ -1,40 +1,42 @@
-#include "UnJugador.h"
+#include "Multijugador.h"
 
-auto eng = std::chrono::system_clock::now().time_since_epoch().count();
-std::default_random_engine gen(eng);
-std::uniform_int_distribution<> rand_digits(0, 750);
+auto ang = std::chrono::system_clock::now().time_since_epoch().count();
+std::default_random_engine g1(ang);
+std::uniform_int_distribution<> digits(0, 750);
 
-void UnJugador::iniciarWindow()
+void Multijugador::iniciarWindow()
 {
-	this->window = new sf::RenderWindow(sf::VideoMode(anchura, altura), "Un Jugador");
+	this->window = new sf::RenderWindow(sf::VideoMode(anchura, altura), "Multijugador");
 	this->window->setFramerateLimit(fps);
 }
 
-void UnJugador::iniciarEnemigo()
+void Multijugador::iniciarEnemigo()
 {
 	this->tiempoSpawnMax = 20.f;
 	this->tiempoSpawn = this->tiempoSpawnMax;
 }
 
-void UnJugador::iniciarJugador1()
+void Multijugador::iniciarJugadores()
 {
 	this->jugador1 = new Jugador1();
 	std::cout << *this->jugador1;
+	this->jugador2 = new Jugador2();
+	std::cout << *this->jugador2;
 }
 
-void UnJugador::iniciarTextureFondo()
+void Multijugador::iniciarTextureFondo()
 {
 	this->texture.loadFromFile("Fondos\\Fase1.png");
 	fondo.setTexture(this->texture);
 }
 
-void UnJugador::iniciarTextureBalas()
+void Multijugador::iniciarTextureBalas()
 {
 	this->textures["BALAS"] = new sf::Texture();
 	this->textures["BALAS"]->loadFromFile("Sprites\\DisparoPlayer1.png");
 }
 
-void UnJugador::iniciarGUI()
+void Multijugador::iniciarGUI()
 {
     //Cargar Fuente de Letra
     this->puntos = 0;
@@ -67,7 +69,7 @@ void UnJugador::iniciarGUI()
     nivelText.setPosition(440, 8);
 }
 
-void UnJugador::iniciarAudioFase()
+void Multijugador::iniciarAudioFase()
 {
     fase.loadFromFile("Audio\\Musica1.ogg");
     sound_fase.setBuffer(fase);
@@ -75,7 +77,7 @@ void UnJugador::iniciarAudioFase()
     sound_fase.play();
 }
 
-void UnJugador::iniciarAudiosFijos()
+void Multijugador::iniciarAudiosFijos()
 {
     Atras.loadFromFile("Audio\\Salir.ogg");
     sound_Atras.setBuffer(Atras);
@@ -88,22 +90,23 @@ void UnJugador::iniciarAudiosFijos()
     sound_impacto.setBuffer(impacto);
 }
 
-UnJugador::UnJugador()
+Multijugador::Multijugador()
 {
     this->iniciarWindow();
     this->iniciarTextureBalas();
     this->iniciarGUI();
-    this->iniciarJugador1();
+    this->iniciarJugadores();
     this->iniciarAudiosFijos();
     this->iniciarEnemigo();
     this->iniciarTextureFondo();
     this->iniciarAudioFase();
 }
 
-UnJugador::~UnJugador()
+Multijugador::~Multijugador()
 {
     delete this->window;
     delete this->jugador1;
+    delete this->jugador2;
 
     //*Eliminar texturas
     for (auto& i : this->textures) {
@@ -121,8 +124,9 @@ UnJugador::~UnJugador()
     }
 }
 
-void UnJugador::updateEntrada()
+void Multijugador::updateEntrada()
 {
+    //Jugador 1
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
         this->jugador1->move(-1.f, 0.f);
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
@@ -138,9 +142,28 @@ void UnJugador::updateEntrada()
             this->jugador1->getPos().y, 0.f, -1.f, 5.f));
         sound_Disparo.play();
     }
+
+    //Jugador 2
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+        this->jugador2->move(-1.f, 0.f);
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+        this->jugador2->move(1.f, 0.f);
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+        this->jugador2->move(0.f, -1.f);
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+        this->jugador2->move(0.f, 1.f);
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && this->jugador2->puedesAtacar()) {
+        
+        this->balas.push_back(new Bala(this->textures["BALAS"],
+            this->jugador2->getPos().x + this->jugador2->getLimites().width / 2.f,
+            this->jugador2->getPos().y, 0.f, -1.f, 5.f));
+        sound_Disparo.play();
+    }
 }
 
-void UnJugador::updatePuntuacion_Nivel()
+void Multijugador::updatePuntuacion_Nivel()
 {
     std::stringstream ss;
 
@@ -154,7 +177,7 @@ void UnJugador::updatePuntuacion_Nivel()
     this->nivelText.setString(sn.str());
 }
 
-void UnJugador::updateEscenario()
+void Multijugador::updateEscenario()
 {
     if (puntos >= 500) {
         if (cambio1 == 0) {
@@ -194,14 +217,13 @@ void UnJugador::updateEscenario()
     if (puntos >= 2500) {
         victoria = true;
         if (ResultadoVUnaVez == 0) {
-            resultV->sonido();
-            (*resultV)("VICTORIA");
+            resultV.sonido();
             ResultadoVUnaVez = 1;
         }
     }
 }
 
-void UnJugador::updateBalas()
+void Multijugador::updateBalas()
 {
     unsigned counter = 0;
     for (auto* bala : this->balas) {
@@ -220,7 +242,7 @@ void UnJugador::updateBalas()
     }
 }
 
-void UnJugador::updatePollEvents()
+void Multijugador::updatePollEvents()
 {
     sf::Event e;
     while (this->window->pollEvent(e))
@@ -236,13 +258,12 @@ void UnJugador::updatePollEvents()
     }
 }
 
-
-void UnJugador::updateEnemigo()
+void Multijugador::updateEnemigo()
 {
     this->tiempoSpawn += 0.5f;
     if (this->tiempoSpawn >= this->tiempoSpawnMax)
     {
-        this->enemigos.push_back(new Enemigo(rand_digits(gen), 50.f));
+        this->enemigos.push_back(new Enemigo(digits(g1), 50.f));
         this->tiempoSpawn = 0.f;
     }
     if (unaVez == 1) {
@@ -292,7 +313,8 @@ void UnJugador::updateEnemigo()
         }
 
         //*Colision enemigo - Jugador
-        else if (minion1->getLimites().intersects(this->jugador1->getLimites())) {
+        else if (minion1->getLimites().intersects(this->jugador1->getLimites()) 
+            || minion1->getLimites().intersects(this->jugador2->getLimites())) {
             delete this->vidas.at(0);
             this->vidas.erase(this->vidas.begin() + 0);
             delete this->enemigos.at(counter);
@@ -308,7 +330,7 @@ void UnJugador::updateEnemigo()
     }
 }
 
-void UnJugador::updateCombate()
+void Multijugador::updateCombate()
 {
     for (int i = 0; i < this->enemigos.size(); i++) {
 
@@ -331,13 +353,14 @@ void UnJugador::updateCombate()
     }
 }
 
-void UnJugador::update()
+void Multijugador::update()
 {
     this->updatePollEvents();
 
     if (derrota == false and victoria == false) {
         this->updateEntrada();
         this->jugador1->update();
+        this->jugador2->update();
         this->updateBalas();
         this->updateEnemigo();
     }
@@ -349,11 +372,12 @@ void UnJugador::update()
     this->updatePuntuacion_Nivel();
 }
 
-void UnJugador::render()
+void Multijugador::render()
 {
     this->window->clear();
     this->window->draw(fondo);
     this->window->draw(*this->jugador1);
+    this->window->draw(*this->jugador2);
 
     for (auto* bala : this->balas) {
         this->window->draw(*bala);
@@ -367,15 +391,14 @@ void UnJugador::render()
         this->window->draw(*minion1);
     }
     if (victoria == true) {
-        this->window->draw(*this->resultV);
+        this->window->draw(resultV);
         sound_fase.stop();
     }
     if (derrota == true) {
-        this->window->draw(*this->resultD);
+        this->window->draw(resultD);
         sound_fase.stop();
         if (ResultadoDUnaVez == 0) {
-            resultD->sonido();
-            (*resultD)("DERROTA");
+            resultD.sonido();
             ResultadoDUnaVez = 1;
         }
     }
@@ -385,7 +408,7 @@ void UnJugador::render()
     this->window->display();
 }
 
-void UnJugador::run()
+void Multijugador::run()
 {
     while (this->window->isOpen())
     {
@@ -393,4 +416,5 @@ void UnJugador::run()
         this->render();
     }
 }
+
 

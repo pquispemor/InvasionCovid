@@ -19,6 +19,13 @@ Victoria::Victoria()
     this->iniciarAudio();
 }
 
+//Patron de Diseño Singleton
+Victoria* Victoria::get_victoria()
+{
+    static Victoria v1;
+    return &v1;
+}
+
 void Victoria::sonido()
 {
     sound_win.play();

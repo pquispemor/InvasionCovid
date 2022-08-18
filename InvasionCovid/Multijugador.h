@@ -1,6 +1,6 @@
 #pragma once
-#ifndef UNJUGADOR_H
-#define UNJUGADOR_H
+#ifndef MULTIJUGADOR_H
+#define MULTIJUGADOR_H
 
 //SFML
 #include <SFML/Graphics.hpp>
@@ -19,6 +19,7 @@
 
 //Clases
 #include "Jugador1.h"
+#include "Jugador2.h"
 #include "Bala.h"
 #include "Vida.h"
 #include "Enemigo.h"
@@ -27,9 +28,8 @@
 #include "Victoria.h"
 #include "Derrota.h"
 
-class UnJugador
+class Multijugador
 {
-private:
     //*Ventana
     sf::RenderWindow* window;
     int anchura = 800;
@@ -91,9 +91,8 @@ private:
     //*Resultado Text
     int ResultadoDUnaVez = 0;
     int ResultadoVUnaVez = 0;
-    //Patron de Diseño Singleton
-    Derrota* resultD = Derrota::get_derrota();
-    Victoria* resultV = Victoria::get_victoria();
+    Derrota resultD;
+    Victoria resultV;
     bool derrota = false;
     bool victoria = false;
     //Audio
@@ -102,10 +101,11 @@ private:
 
     //*Jugador1
     JugadorMain* jugador1;
+    JugadorMain* jugador2;
 
     void iniciarWindow();
     void iniciarEnemigo();
-    void iniciarJugador1();
+    void iniciarJugadores();
     void iniciarTextureFondo();
     void iniciarTextureBalas();
     void iniciarGUI();
@@ -113,8 +113,9 @@ private:
     void iniciarAudiosFijos();
 
 public:
-    UnJugador(/* args */);
-    ~UnJugador();
+
+    Multijugador();
+    ~Multijugador();
 
     void updateEntrada();
     void updatePuntuacion_Nivel();

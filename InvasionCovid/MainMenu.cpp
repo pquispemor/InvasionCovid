@@ -109,6 +109,13 @@ void MainMenu::updateEntrada()
 				}
 				//Dos Jugadores
 				else if (menuJugarOpcion == 1) {
+					if (sonidoUnaVez == 0) {
+						sound.stop();
+						sonidoUnaVez = 1;
+					}
+					Multijugador multijugador;
+					multijugador.run();
+
 
 				}
 			}

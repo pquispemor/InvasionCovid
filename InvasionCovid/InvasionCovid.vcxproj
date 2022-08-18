@@ -147,6 +147,7 @@
     <ClCompile Include="MenuCreditos.cpp" />
     <ClCompile Include="MenuFactory.cpp" />
     <ClCompile Include="MenuJugar.cpp" />
+    <ClCompile Include="Multijugador.cpp" />
     <ClCompile Include="UnJugador.cpp" />
     <ClCompile Include="Victoria.cpp" />
     <ClCompile Include="Vida.cpp" />
@@ -165,6 +166,7 @@
     <ClInclude Include="MenuCreditos.h" />
     <ClInclude Include="MenuFactory.h" />
     <ClInclude Include="MenuJugar.h" />
+    <ClInclude Include="Multijugador.h" />
     <ClInclude Include="UnJugador.h" />
     <ClInclude Include="Victoria.h" />
     <ClInclude Include="Vida.h" />

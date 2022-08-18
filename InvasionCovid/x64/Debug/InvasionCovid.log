@@ -1,8 +1,19 @@
-﻿  UnJugador.cpp
+﻿  Derrota.cpp
+  MainMenu.cpp
+  Multijugador.cpp
+C:\Users\StickyPC\Documents\Github\InvasionCovid\InvasionCovid\Multijugador.cpp(4,31): warning C4244: 'argumento': conversión de '_Rep' a 'unsigned int'; posible pérdida de datos
+          with
+          [
+              _Rep=std::chrono::system_clock::rep
+          ]
+C:\Users\StickyPC\Documents\Github\InvasionCovid\InvasionCovid\Multijugador.cpp(266,52): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+  UnJugador.cpp
 C:\Users\StickyPC\Documents\Github\InvasionCovid\InvasionCovid\UnJugador.cpp(4,32): warning C4244: 'argumento': conversión de '_Rep' a 'unsigned int'; posible pérdida de datos
           with
           [
               _Rep=std::chrono::system_clock::rep
           ]
 C:\Users\StickyPC\Documents\Github\InvasionCovid\InvasionCovid\UnJugador.cpp(244,57): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+  main.cpp
+  Generando código...
   InvasionCovid.vcxproj -> C:\Users\StickyPC\Documents\Github\InvasionCovid\InvasionCovid\x64\Debug\InvasionCovid.exe

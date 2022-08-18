@@ -11,7 +11,10 @@
 //Patron de Diseño Factory Method
 #include "MenuFactory.h" 
 #include "Menu.h"
+
+
 #include "UnJugador.h"
+#include "Multijugador.h"
 #include <memory>
 
 

@@ -19,6 +19,12 @@ Derrota::Derrota()
     this->iniciarGUI();
 }
 
+Derrota* Derrota::get_derrota()
+{
+    static Derrota d1;
+    return &d1;
+}
+
 void Derrota::sonido()
 {
     sound_loser.play();
